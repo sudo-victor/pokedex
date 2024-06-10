@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Pokemon } from "../models/pokemon";
 import { PokemonDetail } from "../models/pokemon-detail";
+import { env } from "../config/env";
 
 interface PokemonState {
   pokemons: Pokemon[];
@@ -21,13 +22,15 @@ const initialState: PokemonState = {
   error: null,
 };
 
+const API_URL = env.api_url
+
 export const fetchPokemons = createAsyncThunk(
   "pokemon/fetchPokemons",
   async (page: number, { rejectWithValue }) => {
     try {
       const limit = 8;
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/pokemons?limit=${limit}&page=${
+        `${API_URL}/pokemons?limit=${limit}&page=${
           page <= 0 ? 1 : page
         }`
       );
@@ -43,7 +46,7 @@ export const fetchPokemonDetails = createAsyncThunk(
   async (name: string, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_API_URL}/pokemons/${name}`
+        `${API_URL}/pokemons/${name}`
       );
       return response.data;
     } catch (error) {
