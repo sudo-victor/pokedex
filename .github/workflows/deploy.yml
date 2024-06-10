@@ -20,7 +20,10 @@ jobs:
 
       - name: Create deployment package
         run: |
-          tar -czf deploy.tar.gz --exclude='.git' --exclude='.github' .
+          mkdir deploy
+          cp -r * deploy/
+          tar -czf deploy.tar.gz deploy
+          rm -rf deploy
 
       - name: Copy files to EC2
         run: |
