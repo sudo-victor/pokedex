@@ -32,8 +32,8 @@ jobs:
 
       - name: Extract deployment package on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@ec2-100-25-98-47.compute-1.amazonaws.com 'mkdir -p /home/ec2-user/pokedex && tar -xzf /home/ec2-user/deploy.tar.gz -C /home/ec2-user/pokedex && rm /home/ec2-user/deploy.tar.gz'
+          ssh -o StrictHostKeyChecking=no ec2-user@ec2-100-25-98-47.compute-1.amazonaws.com 'mkdir -p /home/ec2-user && tar -xzf /home/ec2-user/deploy.tar.gz -C /home/ec2-user/pokedex && rm /home/ec2-user/deploy.tar.gz'
 
       - name: Run Docker Compose on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@ec2-100-25-98-47.compute-1.amazonaws.com 'cd /home/ec2-user/pokedex && docker-compose up --build -d'
+          ssh -o StrictHostKeyChecking=no ec2-user@ec2-100-25-98-47.compute-1.amazonaws.com 'cd /home/ec2-user && docker-compose up --build -d'
