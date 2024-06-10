@@ -36,4 +36,8 @@ jobs:
 
       - name: Run Docker Compose on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no ec2-user@ec2-100-25-98-47.compute-1.amazonaws.com 'cd /home/ec2-user/pokedex && docker-compose up --build -d'
+          ssh -o StrictHostKeyChecking=no ec2-user@ec2-100-25-98-47.compute-1.amazonaws.com 'cd /home/ec2-user/pokedex && cp .env ./deploy/.env'
+
+      - name: Run Docker Compose on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ec2-user@ec2-100-25-98-47.compute-1.amazonaws.com 'cd /home/ec2-user/pokedex/deploy && docker-compose up --build -d'
