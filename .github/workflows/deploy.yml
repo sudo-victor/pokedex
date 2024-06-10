@@ -18,9 +18,17 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.EC2_SSH_KEY }}
 
+      - name: Create deployment package
+        run: |
+          tar -czf deploy.tar.gz --exclude='.git' --exclude='.github' .
+
       - name: Copy files to EC2
         run: |
-          scp -o StrictHostKeyChecking=no -r . ec2-user@ec2-100-25-98-47.compute-1.amazonaws.com:/home/ec2-user/pokedex
+          scp -o StrictHostKeyChecking=no deploy.tar.gz ec2-user@ec2-100-25-98-47.compute-1.amazonaws.com:/home/ec2-user/
+
+      - name: Extract deployment package on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ec2-user@ec2-100-25-98-47.compute-1.amazonaws.com 'mkdir -p /home/ec2-user/pokedex && tar -xzf /home/ec2-user/deploy.tar.gz -C /home/ec2-user/pokedex && rm /home/ec2-user/deploy.tar.gz'
 
       - name: Run Docker Compose on EC2
         run: |
