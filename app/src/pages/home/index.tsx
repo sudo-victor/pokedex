@@ -25,7 +25,7 @@ export function Home() {
     <div className="container mx-auto p-4">
       <img src={LogoImg} alt="Pokemon" width={200} className="m-auto mb-5" />
       {status === "loading" && <div className="text-center">Loading...</div>}
-      {status === "failed" && <div className="text-center text-red-500">Algo de errado não está certo</div>}
+      {status === "failed" && <div className="text-center text-red-500">Error: {error}</div>}
       {status === "succeeded" && (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
