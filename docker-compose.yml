@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: batpass
+      POSTGRES_DB: pokedex
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - pokedex_network
+
+  api:
+    build: ./api
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    networks:
+      - pokedex_network
+
+  web:
+    build: ./app
+    restart: always
+    ports:
+      - "5000:5000"
+    depends_on:
+      - api
+    networks:
+      - pokedex_network
+
+volumes:
+  postgres_data:
+
+networks:
+  pokedex_network:
