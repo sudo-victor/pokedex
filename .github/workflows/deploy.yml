@@ -34,6 +34,10 @@ jobs:
         run: |
           ssh -o StrictHostKeyChecking=no ec2-user@ec2-100-25-98-47.compute-1.amazonaws.com 'mkdir -p /home/ec2-user/pokedex && tar -xzf /home/ec2-user/deploy.tar.gz -C /home/ec2-user/pokedex && rm /home/ec2-user/deploy.tar.gz'
 
+      - name: Install dependencies on EC2
+        run: |
+          ssh -o StrictHostKeyChecking=no ec2-user@ec2-100-25-98-47.compute-1.amazonaws.com 'sudo yum install -y libcrypt'
+
       - name: Run Docker Compose on EC2
         run: |
           ssh -o StrictHostKeyChecking=no ec2-user@ec2-100-25-98-47.compute-1.amazonaws.com 'cd /home/ec2-user/pokedex && docker-compose up --build -d'
