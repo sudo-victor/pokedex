@@ -21,7 +21,8 @@ jobs:
       - name: Create deployment package
         run: |
           mkdir deploy
-          cp -r * deploy/
+          shopt -s extglob
+          cp -r !(deploy) deploy/
           tar -czf deploy.tar.gz deploy
           rm -rf deploy
 
